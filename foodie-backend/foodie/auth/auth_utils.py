@@ -2,7 +2,7 @@ from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required
 from flask import current_app, request, jsonify
 from functools import wraps
-from med_app.models.user import User
+from foodie.models.user import User
 from datetime import datetime, timedelta
 
 

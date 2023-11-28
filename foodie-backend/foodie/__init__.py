@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask import Flask, jsonify
 from sqlalchemy.exc import OperationalError
-from med_app.config import Config
+from foodie.config import Config
 #from med_app.config import App_Config
 from flasgger import Swagger
 from flask_caching import Cache
@@ -81,21 +81,13 @@ def create_app(config):
     mail.init_app(app)  # Initialize Flask-Mail with your app
 
     # imports blueprints
-    from med_app.medication.routes import medication_bp
-    from med_app.reminder.routes import reminder_bp
-    from med_app.adherenceLog.routes import adherence_log_bp
-    from med_app.errors.handlers import error
-    from med_app.medication_time_slot.routes import medication_time_slot_bp
-    from .auth import auth_bp
+    from foodie.errors.handlers import error
+    from foodie.auth.auth import auth_bp
     from .util_routes import util_bp
 
 
     # register blueprint
     app.register_blueprint(auth_bp)
-    app.register_blueprint(medication_bp)
-    app.register_blueprint(adherence_log_bp)
-    app.register_blueprint(medication_time_slot_bp)
-    app.register_blueprint(reminder_bp)
     app.register_blueprint(error)
     app.register_blueprint(util_bp)
 

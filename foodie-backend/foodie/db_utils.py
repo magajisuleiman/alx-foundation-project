@@ -1,4 +1,4 @@
-from med_app import db  
+from foodie import db
 
 def query_one_filtered(table, **kwargs):
     """Query a single item from the table based on filters."""

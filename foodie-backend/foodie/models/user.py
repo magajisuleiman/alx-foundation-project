@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Template for the User Class"""
-from med_app import db
+from foodie import db
 from flask_login import UserMixin
-from med_app.models.base import BaseModel
+from foodie.models.base import BaseModel
 
 
 class User(UserMixin, BaseModel):
@@ -21,7 +21,7 @@ class User(UserMixin, BaseModel):
     is_admin = db.Column(db.Boolean, default=False)
 
     #medications = db.relationship('Medication', backref='user', cascade='all, delete-orphan')
-    medications = db.relationship('Medication', back_populates='user')
+    #medications = db.relationship('Medication', back_populates='user')
 
     def __init__(self, email, first_name, last_name, password, email_confirmed=False, otp=None, otp_expiry=None, profile_picture='http://res.cloudinary.com/dbn9ejpno/image/upload/v1700666059/iuqjx3u5ts4tpvofhdnn.png', is_active=True, is_admin=False):
         super().__init__()
@@ -52,5 +52,4 @@ class User(UserMixin, BaseModel):
             'is_admin': self.is_admin,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt,
-            'medications': [medication.format() for medication in self.medications]
         }

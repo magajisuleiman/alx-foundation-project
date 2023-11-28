@@ -2,7 +2,7 @@
 """
 Base template for the Event driven application
 """
-from med_app import db
+from foodie import db
 from uuid import uuid4
 from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime

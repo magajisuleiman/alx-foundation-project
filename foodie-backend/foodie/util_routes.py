@@ -1,11 +1,11 @@
 from flask import Blueprint, jsonify, send_file, request, url_for, send_from_directory, current_app
 from werkzeug.utils import secure_filename
-from med_app.auth import login_required
+from foodie.auth.auth import login_required
 import os
-from med_app import db
+from foodie import db
 from dotenv import load_dotenv
 import cloudinary.uploader
-from med_app.models.user import User
+from foodie.models.user import User
 
 
 load_dotenv(".env")

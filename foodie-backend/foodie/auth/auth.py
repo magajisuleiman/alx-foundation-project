@@ -2,10 +2,10 @@ from flask import Blueprint, request, jsonify, current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 #from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous.url_safe import URLSafeTimedSerializer as Serializer
-from . import db
-from med_app.models.user import User
+from foodie import db
+from foodie.models.user import User
 from functools import wraps
-from .emails import send_password_reset_email, send_otp_email
+from foodie.emails import send_password_reset_email, send_otp_email, reset_password_otp
 from datetime import datetime, timedelta
 from random import randint
 from .auth_utils import login_required, admin_required
@@ -18,14 +18,12 @@ auth_bp = Blueprint('auth', __name__, url_prefix='/api/v1/auth')
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.json
-    # Check if required fields are present in the request data
-    if 'email' not in data or 'password' not in data or 'first_name' not in data or 'last_name' not in data:
+    required_fields = ['email', 'password', 'first_name', 'last_name']
+    if not all(field in data for field in required_fields):
         return jsonify({'message': 'Incomplete registration data'}), 400
 
-    # turn email to lowercase
     data['email'] = data['email'].lower()
 
-    # Use Regex to Check if the email is valid
     import re
 
     def is_valid_email(email):
@@ -35,32 +33,37 @@ def register():
     if not is_valid_email(data['email']):
         return jsonify({'message': 'Invalid email'}), 400
 
-
     try:
-        # Check if the username is already taken
         existing_user = User.query.filter_by(email=data['email']).first()
         if existing_user:
             return jsonify({'message': 'Email already exists'}), 400
 
-        # Create a new user
-        new_user = User(email=data['email'], first_name=data['first_name'], last_name=data['last_name'], password=generate_password_hash(data['password']))
+        new_user = User(
+            email=data['email'],
+            first_name=data['first_name'],
+            last_name=data['last_name'],
+            password=generate_password_hash(data['password'])
+        )
         new_user.insert()
 
-        # Generate and store the OTP with its expiry time
-        otp = str(randint(1000, 9999))  # Generate a 6-digit OTP
-        otp_expiry = datetime.now() + timedelta(minutes=10)  # Set expiry time to 10 minutes from now
+        otp = str(randint(1000, 9999))
+        otp_expiry = datetime.now() + timedelta(minutes=10)
         new_user.otp = otp
         new_user.otp_expiry = otp_expiry
         new_user.insert()
 
-        # Send the OTP to the user's email (implement send_otp_email function)
-        full_name = new_user.first_name + " " + new_user.last_name
+        full_name = f"{new_user.first_name} {new_user.last_name}"
         send_otp_email(full_name, new_user.email, otp)
 
-        access_token = create_access_token(identity=new_user.id, expires_delta=timedelta(hours=1))   # Access token expires in 1 hour
-        refresh_token = create_refresh_token(identity=new_user.id, expires_delta=timedelta(days=90))  # Refresh token expires in 24 hours
+        access_token = create_access_token(
+            identity=new_user.id,
+            expires_delta=timedelta(hours=1)
+        )
+        refresh_token = create_refresh_token(
+            identity=new_user.id,
+            expires_delta=timedelta(days=90)
+        )
 
-        # get user data
         userData = {
             "id": new_user.id,
             "email": new_user.email,
@@ -82,22 +85,12 @@ def register():
             jsonify(
                 {
                     "error": "Internal server error",
-                    "message": "It's not you it's us",
+                    "message": "It's not you, it's us",
                     "status": False,
                 }
             ),
             500,
         )
-    #--------Logic to Send Email for confirmation --------
-
-#     # Generate and return an authentication token for the new user
-#     token = generate_token(new_user.id)  # Token expiration time: 10 minutes
-
-#     # Send an email with the tokenized link
-#     full_name = new_user.first_name + " " + new_user.last_name
-#     send_register_email(full_name, new_user.email, token)
-
- #   return jsonify({'message': 'User registered. Confirmation email sent.'}), 201
 
 # Endpoint to confirm the OTP sent to the email
 @auth_bp.route('/confirm_otp', methods=['POST'])
@@ -154,26 +147,33 @@ def resend_otp():
 
     return jsonify({'message': 'New OTP sent to email'}), 200
 
-# # Endpoint to confirm the email
-# @auth_bp.route('/confirm_email/<token>', methods=['GET'])
-# def confirm_email(token):
-#     s = Serializer(current_app.config['SECRET_KEY'])
-#     try:
-#         data = s.loads(token)
-#         user = User.query.get(data['user_id'])
-#         if not user or user.email_confirmation_token_used:
-#             raise Exception()
-#     except Exception as e:
-#         return jsonify({'message': 'Invalid or expired token'}), 400
+# Endpoint to send OTP to the user's email during password reset
+@auth_bp.route('/password-reset-otp', methods=['POST'])
+def password_reset_otp():
+    data = request.json
+    if 'email' not in data:
+        return jsonify({'message': 'Email is required to resend OTP'}), 400
 
-#     # Mark the token as used
-#     user.email_confirmation_token_used = True
+    user = User.query.filter_by(email=data['email']).first()
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
 
-#     # Mark the user's email as confirmed
-#     user.email_confirmed = True
-#     db.session.commit()
+    # Generate a new OTP
+    new_otp = str(randint(1000, 9999))  # Generate a new 6-digit OTP
 
-#     return jsonify({'message': 'Email confirmed successfully'}), 200
+    # Update the user's OTP in the database
+    user.otp = new_otp
+    otp_expiry = datetime.now() + timedelta(minutes=10)  # Set expiry time to 10 minutes from now
+    user.otp_expiry = otp_expiry
+    user.update()
+
+    # Resend the OTP to the user's email (implement send_otp_email function)
+    # Send the OTP to the user's email (implement send_otp_email function)
+    full_name = user.first_name + " " + user.last_name
+    reset_password_otp(full_name, user.email, new_otp)
+
+    return jsonify({'message': 'Password reset OTP sent to email'}), 200
+
 
 # Endpoint for user login and token generation
 @auth_bp.route('/login', methods=['POST'])
@@ -225,41 +225,23 @@ def refresh():
 def logout():
     return jsonify({'message': 'Logged out successfully'}), 200
 
-# Endpoint for Password Reset
-@auth_bp.route('/password-reset', methods=['POST'])
-def password_reset():
-    data = request.json
-    if 'email' not in data:
-        return jsonify({'message': 'Email is required'}), 400
-    user = User.query.filter_by(email=data['email']).first()
-    if not user:
-        return jsonify({'message': 'User not found'}), 404
-    token = create_access_token(user.id)  # Token expiration time: 10 minutes
 
-    # Send an email with the tokenized link
-    full_name = user.first_name + " " + user.last_name
-    send_password_reset_email(full_name, user.email, token)
-
-    return jsonify({'message': 'Password reset email sent'}), 200
 
 # Endpoint for password reset (after receiving the reset token)
-@auth_bp.route('/reset_password/<token>', methods=['POST'])
-def reset_password(token):
-    s = Serializer(current_app.config['SECRET_KEY'])
-    try:
-        data = s.loads(token)
-        user = User.query.get(data['user_id'])
-        if not user:
-            raise Exception()
-    except Exception as e:
-        return jsonify({'message': 'Invalid or expired token'}), 400
-
+@auth_bp.route('/confirm-reset-password', methods=['POST'])
+def reset_password():
+    data = request.json
     new_password = request.json.get('new_password')
-    if not new_password:
-        return jsonify({'message': 'New password is required'}), 400
+    email = request.json.get('email')
+    if not new_password or not email:
+        return jsonify({'message': 'New password and email is required'}), 400
+
+    user_check = User.query.filter_by(email=email).first()
+    if not user_check:
+        return jsonify({'message': 'User not found'}), 404
 
     # Update user's password with the new one
-    user.password = generate_password_hash(new_password)
+    user_check.password = generate_password_hash(new_password)
     db.session.commit()
 
     return jsonify({'message': 'Password reset successful'}), 200

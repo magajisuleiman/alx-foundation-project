@@ -2,7 +2,7 @@
 
 from flask import url_for, render_template
 from flask_mail import Message
-from med_app import mail
+from foodie import mail
 
 def send_password_reset_email(name, email, token):
     # Send a password reset email with the tokenized link
@@ -27,14 +27,39 @@ def send_otp_email(name, email, otp):
 #     mail.send(msg)
     try:
         # Create the message for the user
-        msg_title = "Registration Confirmation - MediTrace"
+        msg_title = "Registration Confirmation - Foodie"
         sender = "noreply@app.com"
         msg = Message(msg_title, sender=sender, recipients=[email])
         msg_body = "Please use this verification code to confirm your registration"
         msg.body = ""
-        msg.reply_to = "meditrace@gmail.com"
+        msg.reply_to = "foodie@gmail.com"
         data = {
-            'app_name': "MediTrace",
+            'app_name': "Foodie",
+            'title': msg_title,
+            'body': msg_body,
+            'name': name,
+            'otp': otp
+        }
+        msg.html = render_template("email_otp.html", data=data)
+
+        # Send the message
+        mail.send(msg)
+
+    except Exception as e:
+        return {'msg': 'Email not sent', 'error': str(e)}
+
+
+def reset_password_otp(name, email, otp):
+    try:
+        # Create the message for the user
+        msg_title = "Password Reset OTP - Foodie"
+        sender = "noreply@app.com"
+        msg = Message(msg_title, sender=sender, recipients=[email])
+        msg_body = "Please use this verification code to reset your password"
+        msg.body = ""
+        msg.reply_to = "foodie@gmail.com"
+        data = {
+            'app_name': "Foodie",
             'title': msg_title,
             'body': msg_body,
             'name': name,
