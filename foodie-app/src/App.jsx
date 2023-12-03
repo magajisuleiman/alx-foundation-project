@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './NavBar';
 import Hero from './Hero';
 import Footer from './Footer';
-import MenuCard from './MenuCard';
+import Menu from './Menu';
 
 
 function App () {
@@ -12,8 +12,8 @@ function App () {
     <>
       <Navbar />
       <Hero />
+      <Menu />
       <Footer />
-      {/* <MenuCard /> */}
     </>
   );
 };
