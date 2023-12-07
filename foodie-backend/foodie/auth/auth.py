@@ -18,7 +18,7 @@ auth_bp = Blueprint('auth', __name__, url_prefix='/api/v1/auth')
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.json
-    required_fields = ['email', 'password', 'first_name', 'last_name']
+    required_fields = ['email', 'password', 'first_name', 'last_name', 'phone_number']
     if not all(field in data for field in required_fields):
         return jsonify({'message': 'Incomplete registration data'}), 400
 
@@ -42,6 +42,7 @@ def register():
             email=data['email'],
             first_name=data['first_name'],
             last_name=data['last_name'],
+            phone_number=data['phone_number'],
             password=generate_password_hash(data['password'])
         )
         new_user.insert()
@@ -69,6 +70,7 @@ def register():
             "email": new_user.email,
             "first_name": new_user.first_name,
             "last_name": new_user.last_name,
+            "phone_number": new_user.phone_number,
             "email_confirmed": new_user.email_confirmed,
             "profile_picture": new_user.profile_picture,
             "is_active": new_user.is_active,
@@ -219,6 +221,18 @@ def refresh():
     new_access_token = create_access_token(identity=current_user_id, expires_delta=timedelta(hours=1))
     return jsonify(access_token=new_access_token, message='Token refreshed successfully', user_data=User.query.get(current_user_id).format()), 200
 
+
+# Endpoint to check if email exist in the database or not. Return True if it exist
+@auth_bp.route('/check-email', methods=['POST'])
+def check_email():
+    data = request.get_json()
+    email = data.get('email')
+
+    user = User.query.filter_by(email=email).first()
+    if user:
+        return jsonify({'emailExists': True}), 200
+    else:
+        return jsonify({'emailExists': False}), 200
 
 # Endpoint for user logout
 @auth_bp.route('/logout', methods=['POST'])

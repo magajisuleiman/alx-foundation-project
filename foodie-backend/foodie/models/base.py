@@ -29,7 +29,6 @@ class BaseModel(db.Model):
     def __init__(self, *args, **kwargs):
       super().__init__(*args, **kwargs)
       self.id = get_uuid() if not self.id else self.id  # Generate UUID if not provided
-      #self.id = get_uuid()
       self.createdAt = datetime.now()
       self.updatedAt = datetime.now()
 

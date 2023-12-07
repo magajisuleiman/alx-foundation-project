@@ -11,11 +11,6 @@ import os
 from flask_mail import Mail
 from flask_jwt_extended import JWTManager
 
-# # Create instances of Flask extensions
-# app = Flask(__name__)
-# app.config.from_object(App_Config)
-# if app.config["SQLALCHEMY_DATABASE_URI"]:
-#         print("using db")
 
 db = SQLAlchemy()
 
@@ -35,6 +30,8 @@ def create_app(config):
     #app.config.from_object(Config)
     if app.config["SQLALCHEMY_DATABASE_URI"]:
         print("using db")
+
+    #db = SQLAlchemy(app)
 
 
     # Initialize CORS
@@ -84,15 +81,20 @@ def create_app(config):
     from foodie.errors.handlers import error
     from foodie.auth.auth import auth_bp
     from .util_routes import util_bp
+    from foodie.menu_category.routes import menu_category_bp
 
 
     # register blueprint
     app.register_blueprint(auth_bp)
     app.register_blueprint(error)
     app.register_blueprint(util_bp)
+    app.register_blueprint(menu_category_bp)
 
     # create db tables from models if not exists
     with app.app_context():
-        db.create_all()
+        try:
+             db.create_all()
+        except Exception as e:
+             print(f"An error occurred: {e}")
 
     return app

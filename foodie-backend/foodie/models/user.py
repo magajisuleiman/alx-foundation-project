@@ -9,10 +9,11 @@ class User(UserMixin, BaseModel):
     __tablename__ = 'users'
 
     #id = db.Column(db.String(60), primary_key=True)
-    email = db.Column(db.String(255), unique=True, nullable=False)
+    email = db.Column(db.String(255), unique=True, nullable=False, index=True)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(500), nullable=False)
+    phone_number = db.Column(db.String(20), nullable=True)
     email_confirmed = db.Column(db.Boolean, default=False)
     otp = db.Column(db.String(6), default=None)
     otp_expiry = db.Column(db.DateTime, default=None)
@@ -20,15 +21,17 @@ class User(UserMixin, BaseModel):
     is_active = db.Column(db.Boolean, default=True)
     is_admin = db.Column(db.Boolean, default=False)
 
-    #medications = db.relationship('Medication', backref='user', cascade='all, delete-orphan')
-    #medications = db.relationship('Medication', back_populates='user')
+    # Adding a one-to-many relationship with Review
+    reviews = db.relationship('Review', backref='user_reviews', lazy=True)
 
-    def __init__(self, email, first_name, last_name, password, email_confirmed=False, otp=None, otp_expiry=None, profile_picture='http://res.cloudinary.com/dbn9ejpno/image/upload/v1700666059/iuqjx3u5ts4tpvofhdnn.png', is_active=True, is_admin=False):
+
+    def __init__(self, email, first_name, last_name, password, phone_number, email_confirmed=False, otp=None, otp_expiry=None, profile_picture='http://res.cloudinary.com/dbn9ejpno/image/upload/v1700666059/iuqjx3u5ts4tpvofhdnn.png', is_active=True, is_admin=False):
         super().__init__()
         self.email = email
         self.first_name = first_name
         self.last_name = last_name
         self.password = password
+        self.phone_number = phone_number
         self.email_confirmed = email_confirmed
         self.otp = otp
         self.otp_expiry = otp_expiry
@@ -46,6 +49,7 @@ class User(UserMixin, BaseModel):
             'email': self.email,
             'first_name': self.first_name,
             'last_name': self.last_name,
+            'phone_number': self.phone_number,
             'email_confirmed': self.email_confirmed,
             'profile_picture': self.profile_picture,
             'is_active': self.is_active,
