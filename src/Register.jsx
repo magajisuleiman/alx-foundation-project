@@ -38,15 +38,15 @@ function Register () {
           </div>
           <div className="flex gap-10">
             <div className="mb-4">
-                  <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
-                  <input type="text" id="username" name="username" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"/>
-              </div>
-              <div className="mb-4">
-                  <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
-                  <input type="text" id="username" name="username" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"/>
+              <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+              <input type="password" id="password" name="password" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"/>
+            </div>
+            <div className="mb-4">
+              <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+              <input type="password" id="password" name="password" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"/>
             </div>
           </div>
-          <button type="submit" class="w-auto  bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">Register</button>
+          <button type="submit" class="w-auto  bg-brandColor text-white p-2 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">Register</button>
         </form>
 
       </div>

@@ -13,10 +13,7 @@ function App () {
 
   return (
     <>
-      {/* <Navbar />
-      <Hero />   
-      <Footer />    */}
-      <Menu />
+      <Register />
     </>
   );
 };

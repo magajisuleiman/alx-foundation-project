@@ -24,7 +24,7 @@ function Login () {
                 <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
                 <input type="password" id="password" name="password" class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"/>
             </div>
-            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">Login</button>
+            <button type="submit" class="w-full bg-brandColor text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">Login</button>
             <div class="flex justify-between mt-4 text-center">
                <a href="#" class="text-brandColor hover:underline">Forgot Password?</a>
                <a href="#" class="text-brandColor hover:underline">Register</a>
