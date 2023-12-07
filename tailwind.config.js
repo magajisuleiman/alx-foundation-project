@@ -14,6 +14,7 @@ export default {
         karla: ['Karla', 'sans-serif'],
         spectral: ['Spectral', 'serif'],
       },
+      
     },
   },
   plugins: [],
