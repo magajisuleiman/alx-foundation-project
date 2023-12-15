@@ -85,7 +85,7 @@ function Login() {
               id="email"
               name="email"
               value={email}
-              class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
+              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
               onChange={handleEmailChange}
               placeholder="Enter your email address"
               required
@@ -103,7 +103,7 @@ function Login() {
               id="password"
               name="password"
               value={password}
-              class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
+              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
               onChange={handlePasswordChange}
               placeholder="Enter your password"
               required

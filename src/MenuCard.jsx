@@ -1,19 +1,34 @@
 import React from 'react';
-import swallo from './assets/swallo.png';
+import rice from './assets/swallo.png';
 
 
 
-function MenuCard (props) {
+function MenuCard () {
  
 
   return (
-    <div className='flex gap-5'>
-      <div className='flex flex-col gap-4 justify-center items-center shadow-2xl max-w-sm hover:cursor-pointer'> 
-        <img className='p-5' src={ swallo } alt="swallo-menu" />
-        <h3 className='font-spectral font-bold text-4xl p-3'>{props.name}</h3>
+    <div className>
+      <h1 className='text-center font-spectral text-2xl font-bold p-5'>RICE</h1>
+      <div className='flex justify-around h-screen'>
+        <div className='flex flex-col border shadow w-1/4 h-1/2 hover:shadow-2xl rounded-md hover:cursor-pointer'>
+          <img className='min-w-full h-4/5 p-3 rounded-t-md' src={ rice } alt="rice" />
+          <h3 className='text-brandColor text-center pt-4 pb-4 font-bold font-mono p-1 '>Jollof Rice</h3>
+          <div className='flex justify-between p-3 m-2 bg-brandColor text-white rounded-md '>
+            <div>Select Deal</div>
+            <div>NGN 800</div>
+          </div>
+        </div>
+        <div className='flex flex-col max-w-lg border shadow hover:shadow-2xl rounded-md hover:cursor-pointer'>
+          <img className='min-w-full h-4/5 p-3 rounded-t-md' src={ rice } alt="rice" />
+          <h3 className='text-brandColor text-center pt-4 pb-4 font-bold font-mono p-1 '>Jollof Rice</h3>
+          <div className='flex justify-between p-3 m-2 bg-brandColor text-white rounded-md '>
+            <div>Select Deal</div>
+            <div>NGN 800</div>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default MenuCard;
+export default MenuCard
