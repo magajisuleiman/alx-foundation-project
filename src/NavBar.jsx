@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import logo from "./assets/logo.svg";
 import user from "./assets/user.svg";
 import shopping from "./assets/shopping.svg";
+import { CartContext } from "./CartContext";
+import CartModal from "./CartModal";
 
-function Navbar() {
+const Navbar = () => {
+  const { cartItems } = useContext(CartContext);
+  const [showCartModal, setShowCartModal] = useState(false);
+
+  const handleCartClick = () => {
+    setShowCartModal(true);
+  };
+
+  const handleCloseCartModal = () => {
+    setShowCartModal(false);
+  };
+
   return (
     <nav className="bg-white shadow flex p-3 justify-between">
       <a href="/hero">
@@ -21,7 +34,7 @@ function Navbar() {
           </a>
         </li>
         <li>
-          <a className="hover:text-brandColor font-mono" href="#">
+          <a className="hover:text-brandColor font-mono" href="/menu">
             Menu
           </a>
         </li>
@@ -30,15 +43,33 @@ function Navbar() {
             Contact
           </a>
         </li>
+        <li>
+          <a className="hover:text-brandColor font-mono" href="/profile">
+            Profile
+          </a>
+        </li>
       </ul>
       <div className="flex gap-8">
-        <img className="text-brandColor" src={shopping} alt="cart" width={40} />
+        <a href="/register">
+          <img
+            className="text-brandColor"
+            src={shopping}
+            alt="cart"
+            width={40}
+          />
+        </a>
+        <div className="container-fluid">
+          <button className="btn btn-outline-primary" onClick={handleCartClick}>
+            Cart ({cartItems.length})
+          </button>
+          {showCartModal && <CartModal handleClose={handleCloseCartModal} />}
+        </div>
         <a href="/register">
           <img src={user} alt="user-pix" width={40} />
         </a>
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;
