@@ -10,9 +10,6 @@ import MenuCard from './MenuCard.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Navbar />
-    <Menu />
-    <MenuCard />
-    <Footer />
+    <App />
   </React.StrictMode>
 )
