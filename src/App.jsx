@@ -13,12 +13,15 @@ import "react-toastify/dist/ReactToastify.css";
 import ItemDetailPage from "./ItemDetail";
 import { CartProvider } from "./CartContext";
 
+import CartModal from "./CartModal";
+
 function App() {
   return (
     <Router>
       <div className="App">
         <CartProvider>
           <Navbar />
+          <CartModal />
           <Routes>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />

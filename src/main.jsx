@@ -7,6 +7,10 @@ import Navbar from './NavBar.jsx'
 import Footer from './Footer.jsx'
 import Menu from './Menu.jsx'
 import MenuCard from './MenuCard.jsx'
+import ItemDetailPage from './ItemDetail.jsx'
+
+
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

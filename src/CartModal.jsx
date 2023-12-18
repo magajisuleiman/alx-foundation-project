@@ -34,26 +34,35 @@ const CartModal = ({ handleClose }) => {
   };
 
   return (
-    <div className="modal" tabIndex="-1" role="dialog">
-      {/* ... (existing modal code) */}
-      <div className="modal-body">
-        {cartItems.map((item) => (
-          <div key={item.id}>
-            <p>ID: {item.id}</p>
-            <p>Name: {item.name}</p>
-            <p>Quantity: {item.quantity}</p>
-            <p>Price: {item.price * item.quantity}</p>
-            <button onClick={() => removeItem(item.id)}>Remove</button>
-            <button onClick={() => decreaseQuantity(item.id)}> - </button>
-            <button onClick={() => increaseQuantity(item.id)}> + </button>
-          </div>
-        ))}
-        <div>
-          <strong>Total Price: {calculateTotalPrice()}</strong>
+    <div className="flex gap-3 m-3 ">
+      <div className="mt-4 w-2/3 flex flex-col">
+        <div className="border h-48  ">
+          <h1 className="border-b text-brandColor p-4 font-mono font-bold text-xl">Customer Address</h1>
+          <p className="p-3 h-1/2">4th Floor ITF Building, Lagos</p>
         </div>
       </div>
-      {/* ... (existing modal code) */}
+      <div className="flex grow flex-col border mt-4">
+        <div className="border-b  text-brandColor p-4 font-mono font-bold text-xl">Orde Summary</div>
+        <div className="flex border-b justify-between p-8 font-mono ">
+          <div className="flex flex-col gap-4">
+            <div>Items</div>
+            <div>Delivery</div>
+          </div>
+          <div className="flex flex-col gap-4">
+            <div>N2000</div>
+            <div>N500</div>
+          </div>
+        </div>
+        <div className="border-b flex justify-between pt-4 pb-4 font-bold">
+          <div>Total</div>
+          <div>N2500</div>
+        </div>
+        <div className="p-2">
+          <button className='w-full bg-brandColor hover:bg-slate-400 text-white font-bold py-2 px-4 rounded-full'>Order Now</button>
+        </div>
+      </div>
     </div>
+
   );
 };
 
