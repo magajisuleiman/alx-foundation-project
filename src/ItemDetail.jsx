@@ -36,11 +36,11 @@ const ItemDetailPage = () => {
   const totalPrice = item ? quantity * item.price : 0;
 
   return (
-    <div className="container mt-4">
+    <div className="flex justify-center align-middle container mt-4">
       {item ? (
-        <div className="row">
-          <div className="col-md-6">
-            <img src={item.image_url} alt={item.name} className="img-fluid" />
+        <div className="flex justify-center mt-9 mb-9 h-60">
+          <div className="">
+            <img src={item.image_url} alt={item.name} className="w-full" />
           </div>
           <div className="col-md-6">
             <h2>{item.name}</h2>
@@ -62,7 +62,15 @@ const ItemDetailPage = () => {
               </button>
             </div>
             <p>Total Price: NGN {totalPrice}</p>
-            <button className="btn btn-primary" onClick={handleAddToCart}>
+            <button
+              className="btn btn-danger my-cart-btn my-cart-b"
+              data-id={item.id}
+              data-name={item.name}
+              data-summary={`summary ${item.id}`}
+              data-price={item.price}
+              data-quantity="1"
+              data-image={item.image}
+            >
               Add to Cart
             </button>
           </div>
