@@ -4,8 +4,18 @@ import user from "./assets/user.svg";
 import shopping from "./assets/shopping.svg";
 import { CartContext } from "./CartContext";
 import CartModal from "./CartModal";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import "./style.css";
+import { useAuth } from "./AuthContext";
 
 const Navbar = () => {
+  const { handleLogout } = useAuth();
+  const navigate = useNavigate();
+  // Check authentication using token
+  const accessToken = localStorage.getItem("accessToken");
+  const isAuthenticated = !!accessToken;
+
   const { cartItems } = useContext(CartContext);
   const [showCartModal, setShowCartModal] = useState(false);
 
@@ -16,7 +26,6 @@ const Navbar = () => {
   const handleCloseCartModal = () => {
     setShowCartModal(false);
   };
-
   return (
     <nav className="bg-white shadow flex p-3 justify-between">
       <a href="/hero">
@@ -43,14 +52,16 @@ const Navbar = () => {
             Contact
           </a>
         </li>
-        <li>
-          <a className="hover:text-brandColor font-mono" href="/profile">
-            Profile
-          </a>
-        </li>
+        {isAuthenticated && (
+          <li>
+            <a className="hover:text-brandColor font-mono" href="/profile">
+              Profile
+            </a>
+          </li>
+        )}
       </ul>
       <div className="flex gap-8">
-        <a href="/register">
+        <a href="/cart">
           <img
             className="text-brandColor"
             src={shopping}
@@ -58,15 +69,24 @@ const Navbar = () => {
             width={40}
           />
         </a>
-        <div className="container-fluid">
-          <button className="btn btn-outline-primary" onClick={handleCartClick}>
-            Cart ({cartItems.length})
-          </button>
-          {showCartModal && <CartModal handleClose={handleCloseCartModal} />}
+        <div className="cart">
+          <a href="/cart">
+            <span className="fa fa-shopping-cart my-cart-icon">
+              <span className="badge badge-notify my-cart-badge">
+                ({cartItems.length})
+              </span>
+            </span>
+          </a>
         </div>
-        <a href="/register">
-          <img src={user} alt="user-pix" width={40} />
-        </a>
+        {isAuthenticated ? ( // Conditionally render based on authentication
+          <h5 onClick={handleLogout}>Logout</h5>
+        ) : (
+          <React.Fragment>
+            <a href="/register">
+              <img src={user} alt="register" width={40} />
+            </a>
+          </React.Fragment>
+        )}
       </div>
     </nav>
   );

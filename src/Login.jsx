@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "./assets/logo.svg";
 import { toast } from "react-toastify";
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -39,14 +41,15 @@ function Login() {
       const responseData = await response.json();
 
       if (response.ok) {
-        const accessToken = responseData.userData.accessToken;
+        const accessToken = responseData.accessToken;
 
-        // Store the access token in local storage
+        // Convert userData object to string and store in local storage
         localStorage.setItem("accessToken", accessToken);
 
         // Handle successful login
         toast.success("Login successful");
         console.log("Login successful!");
+        navigate("/menu");
         // Redirect or perform necessary actions upon successful login
       } else {
         // Handle failed login
@@ -71,12 +74,12 @@ function Login() {
             </h3>
           </div>
         </div>
-        <h1 class="text-2xl font-semibold mb-4 mt-4">Login</h1>
+        <h1 className="text-2xl font-semibold mb-4 mt-4">Login</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="email"
-              class="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm font-bold mb-2"
             >
               Email Address
             </label>
@@ -94,7 +97,7 @@ function Login() {
           <div className="mb-4">
             <label
               htmlFor="password"
-              class="block text-gray-700 text-sm font-bold mb-2"
+              className="block text-gray-700 text-sm font-bold mb-2"
             >
               Password
             </label>
@@ -111,15 +114,15 @@ function Login() {
           </div>
           <button
             type="submit"
-            class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
           >
             Login
           </button>
-          <div class="flex justify-between mt-4 text-center">
-            <a href="#" class="text-brandColor hover:underline">
+          <div className="flex justify-between mt-4 text-center">
+            <a href="#" className="text-brandColor hover:underline">
               Forgot Password?
             </a>
-            <a href="/register" class="text-brandColor hover:underline">
+            <a href="/register" className="text-brandColor hover:underline">
               Register
             </a>
           </div>

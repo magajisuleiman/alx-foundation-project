@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 import { CartContext } from "./CartContext";
 
-const CartModal = ({ handleClose }) => {
+const Checkout = ({ handleClose }) => {
   const { cartItems, addToCart } = useContext(CartContext);
 
   const removeItem = (itemId) => {
@@ -100,4 +100,4 @@ const CartModal = ({ handleClose }) => {
   );
 };
 
-export default CartModal;
+export default Checkout;

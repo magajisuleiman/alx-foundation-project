@@ -146,13 +146,13 @@ function Register() {
             </h3>
           </div>
         </div>
-        <h1 class="text-2xl font-semibold mb-4 mt-4">Create Account</h1>
+        <h1 className="text-2xl font-semibold mb-4 mt-4">Create Account</h1>
         <form onSubmit={handleSubmit}>
           <div className="flex gap-10">
             <div className="mb-4">
               <label
                 htmlFor="firstName"
-                class="block text-gray-700 text-sm font-bold mb-2"
+                className="block text-gray-700 text-sm font-bold mb-2"
               >
                 First Name
               </label>
@@ -160,7 +160,7 @@ function Register() {
                 type="text"
                 id="firstName"
                 name="firstName"
-                class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
+                className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
                 onChange={handleFirstNameChange}
                 required
               />
@@ -168,7 +168,7 @@ function Register() {
             <div className="mb-4">
               <label
                 htmlFor="lastName"
-                class="block text-gray-700 text-sm font-bold mb-2"
+                className="block text-gray-700 text-sm font-bold mb-2"
               >
                 Last Name
               </label>
@@ -176,7 +176,7 @@ function Register() {
                 type="text"
                 id="lastName"
                 name="lastName"
-                class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
+                className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
                 onChange={handleLastNameChange}
                 required
               />
@@ -186,7 +186,7 @@ function Register() {
             <div className="mb-4">
               <label
                 htmlFor="email"
-                class="block text-gray-700 text-sm font-bold mb-2"
+                className="block text-gray-700 text-sm font-bold mb-2"
               >
                 Email
               </label>
@@ -194,7 +194,7 @@ function Register() {
                 type="text"
                 id="email"
                 name="email"
-                class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
+                className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
                 onChange={handleEmailChange}
                 required
               />
@@ -207,7 +207,7 @@ function Register() {
             <div className="mb-4">
               <label
                 htmlFor="phoneNumber"
-                class="block text-gray-700 text-sm font-bold mb-2"
+                className="block text-gray-700 text-sm font-bold mb-2"
               >
                 Phone Number
               </label>
@@ -215,7 +215,7 @@ function Register() {
                 type="text"
                 id="phoneNumber"
                 name="phoneNumber"
-                class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
+                className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
                 onChange={handlePhoneNumberChange}
                 required
               />
@@ -225,7 +225,7 @@ function Register() {
             <div className="mb-4">
               <label
                 htmlFor="password"
-                class="block text-gray-700 text-sm font-bold mb-2"
+                className="block text-gray-700 text-sm font-bold mb-2"
               >
                 Password
               </label>
@@ -233,7 +233,7 @@ function Register() {
                 type="password"
                 id="password"
                 name="password"
-                class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
+                className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
                 onChange={handlePasswordChange}
                 required
               />
@@ -249,7 +249,7 @@ function Register() {
             <div className="mb-4">
               <label
                 htmlFor="confirmPassword"
-                class="block text-gray-700 text-sm font-bold mb-2"
+                className="block text-gray-700 text-sm font-bold mb-2"
               >
                 Confirm Password
               </label>
@@ -257,7 +257,7 @@ function Register() {
                 type="password"
                 id="confirmPassword"
                 name="confirmPassword"
-                class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
+                className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-brandColor"
                 onChange={handleConfirmPasswordChange}
                 required
               />
@@ -270,14 +270,14 @@ function Register() {
           </div>
           <button
             type="submit"
-            class="w-auto  bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+            className="w-auto  bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
             disabled={!passwordValid || !passwordMatch || emailExists}
           >
             Register
           </button>
           <a
             href="/login"
-            class="w-auto  bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+            className="w-auto  bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
           >
             Login
           </a>
