@@ -12,7 +12,7 @@
 This repository contains the codebase for a foodies restaurant website, aimed at showcasing the restaurant's menu, services, and providing an interactive platform for customers.
 
 # Architecture
-![architecture](#)
+![architecture](https://drive.google.com/file/d/1oC0AW6-7EKNtqkCDfBIb4kzQKblWrmsC/view?usp=sharing)
 
 
 ## Features and Overview
@@ -28,7 +28,7 @@ This repository contains the codebase for a foodies restaurant website, aimed at
 
 - **Frontend**: HTML, React.js, Tailwind CSS
 - **Backend**: Python Flask
-- **Database**: MYSQL 
+- **Database**: Sqlite/PostgreSQL  
 - **Additional Tools**: RESTful API for reservations, Google Maps API for location integration, Paystact API for payment gateway
 
 
@@ -81,4 +81,15 @@ This repository contains the codebase for a foodies restaurant website, aimed at
     - Return: Details of a specific order, including order items and status.
 
 
-## Setup Instructions
+# Contributors
+
+[Magaji Suleiman](magajisuleiman1203@gmail.com)
+
+[Samuel Ogboye](ogboyesam@gmail.com)
+
+[Nababa Abdulrahmon](nababaabdulrahmon57@gmail.com)
+
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
