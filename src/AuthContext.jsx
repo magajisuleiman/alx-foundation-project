@@ -45,15 +45,6 @@ export const AuthProvider = ({ children }) => {
         console.error("Error logging out:", error);
       });
   };
-  //   const login = () => {
-  //     // Implement your login logic here
-  //     const accessToken = localStorage.getItem("accessToken");
-  //     const isAuthenticated = !!accessToken;
-  //     setIsLoggedIn(isAuthenticated);
-  //   };
-  // get the current date and time
-  const time = new Date();
-  console.log("isLoggedIn" + " " + isLoggedIn + " " + time);
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, handleLogout }}>
