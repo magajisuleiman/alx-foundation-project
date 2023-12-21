@@ -10,12 +10,8 @@ import "./style.css";
 import { useAuth } from "./AuthContext";
 
 const Navbar = () => {
-  const { handleLogout } = useAuth();
+  const { handleLogout, isLoggedIn } = useAuth();
   const navigate = useNavigate();
-  // Check authentication using token
-  const accessToken = localStorage.getItem("accessToken");
-  const isAuthenticated = !!accessToken;
-
   const { cartItems } = useContext(CartContext);
   const [showCartModal, setShowCartModal] = useState(false);
 
@@ -52,7 +48,7 @@ const Navbar = () => {
             Contact
           </a>
         </li>
-        {isAuthenticated && (
+        {isLoggedIn && (
           <li>
             <a className="hover:text-brandColor font-mono" href="/profile">
               Profile
@@ -60,34 +56,37 @@ const Navbar = () => {
           </li>
         )}
       </ul>
-      <div className="flex gap-8">
-        <a href="/cart">
-          <img
-            className="text-brandColor"
-            src={shopping}
-            alt="cart"
-            width={40}
-          />
-        </a>
-        <div className="cart">
+      {isLoggedIn && (
+        <div className="flex gap-8">
           <a href="/cart">
-            <span className="fa fa-shopping-cart my-cart-icon">
-              <span className="badge badge-notify my-cart-badge">
-                ({cartItems.length})
+            <img
+              className="text-brandColor"
+              src={shopping}
+              alt="cart"
+              width={40}
+            />
+          </a>
+          <div className="cart">
+            <a href="/cart">
+              <span className="fa fa-shopping-cart my-cart-icon">
+                <span className="badge badge-notify my-cart-badge">
+                  ({cartItems.length})
+                </span>
               </span>
-            </span>
+            </a>
+          </div>
+          <button className="logout" onClick={handleLogout}>
+            <h5>Logout</h5>
+          </button>
+        </div>
+      )}
+      {!isLoggedIn && (
+        <div className="flex gap-8">
+          <a href="/register">
+            <img src={user} alt="register" width={40} />
           </a>
         </div>
-        {isAuthenticated ? ( // Conditionally render based on authentication
-          <h5 onClick={handleLogout}>Logout</h5>
-        ) : (
-          <React.Fragment>
-            <a href="/register">
-              <img src={user} alt="register" width={40} />
-            </a>
-          </React.Fragment>
-        )}
-      </div>
+      )}
     </nav>
   );
 };

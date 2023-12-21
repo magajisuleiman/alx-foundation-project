@@ -257,7 +257,7 @@ function Profile() {
                   <div className="mb-4">{userData.phone_number}</div>
                   <div className="mb-4">{userData.email}</div>
                   <div className="mb-4">{userData.createdAt}</div>
-                  <div className="mb-4">5</div>
+                  <div className="mb-4">{userData.order_count}</div>
                   <div className="mb-4">{userData.last_login}</div>
                   <div className="mb-4">{userData.house_address}</div>
                 </div>

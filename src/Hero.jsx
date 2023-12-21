@@ -1,7 +1,11 @@
 import React from "react";
 import heroImg from "./assets/heroImg.png";
+import { useAuth } from "./AuthContext";
 
 function Hero() {
+  const { isLoggedIn } = useAuth();
+  const orderLink = isLoggedIn ? "/menu" : "/login";
+
   return (
     <div className="flex justify-center items-center max-w-screen ml-10 mr-10 gap-5">
       <div>
@@ -20,7 +24,7 @@ function Hero() {
           </p>
         </div>
         <div className="mt-9">
-          <a href="/login">
+          <a href={orderLink}>
             <button className="bg-brandColor hover:bg-slate-400 text-white font-bold py-2 px-4 rounded-full">
               Order Now
             </button>

@@ -1,22 +1,30 @@
 // AuthContext.js
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
 export const useAuth = () => {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
-  // Check authentication using token
-  const accessToken = localStorage.getItem("accessToken");
-  const isAuthenticated = !!accessToken;
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Initial state: not logged in
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    const isAuthenticated = !!accessToken;
+    setIsLoggedIn(isAuthenticated);
+  }, []);
 
   const handleLogout = () => {
+    const accessToken = localStorage.getItem("accessToken");
     // Perform the logout action
     fetch("https://foodie-bh1b.onrender.com/api/v1/auth/logout", {
       method: "POST",
@@ -37,15 +45,18 @@ export const AuthProvider = ({ children }) => {
         console.error("Error logging out:", error);
       });
   };
-  const login = () => {
-    // Implement your login logic here
-    if (isAuthenticated) {
-      setIsLoggedIn(true);
-    }
-  };
+  //   const login = () => {
+  //     // Implement your login logic here
+  //     const accessToken = localStorage.getItem("accessToken");
+  //     const isAuthenticated = !!accessToken;
+  //     setIsLoggedIn(isAuthenticated);
+  //   };
+  // get the current date and time
+  const time = new Date();
+  console.log("isLoggedIn" + " " + isLoggedIn + " " + time);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, handleLogout }}>
+    <AuthContext.Provider value={{ isLoggedIn, handleLogout }}>
       {children}
     </AuthContext.Provider>
   );

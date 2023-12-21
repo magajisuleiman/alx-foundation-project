@@ -4,6 +4,7 @@ import {
   Route,
   Routes,
   Navigate,
+  useLocation,
 } from "react-router-dom";
 import Navbar from "./NavBar";
 import Hero from "./Hero";
@@ -17,11 +18,25 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ItemDetailPage from "./ItemDetail";
 import { CartProvider } from "./CartContext";
-import { AuthProvider } from "./AuthContext";
+import { AuthProvider, useAuth } from "./AuthContext";
 import CartModal from "./CartModal";
-import Checkout from "./Checkout";
+import ItemCheckout from "./Checkout";
+import AuthVerify from "./Auth/AuthVerify";
+import useLogout from "./Auth/useLogout";
 
+function RequireAuth({ children }) {
+  const { isLoggedIn } = useAuth();
+  console.log("isLoggedIn App" + " " + isLoggedIn);
+  let location = useLocation();
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" state={{ from: location }} />;
+  }
+
+  return children;
+}
 function App() {
+  const logOut = useLogout();
   return (
     <Router>
       <AuthProvider>
@@ -35,14 +50,27 @@ function App() {
               <Route path="/" element={<Hero />} />
               <Route path="/menu" element={<Menu />} />
               <Route path="/menucard" element={<MenuCard />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/item/:itemId" element={<ItemDetailPage />} />
-              <Route path="/cart" element={<CartModal />} />
-              <Route path="checkout" element={<Checkout />} />
+              <Route
+                path="/profile"
+                element={
+                  <RequireAuth>
+                    <Profile />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/cart"
+                element={
+                  <RequireAuth>
+                    <ItemCheckout />
+                  </RequireAuth>
+                }
+              />
             </Routes>
             <Footer />
           </CartProvider>
           <ToastContainer />
+          <AuthVerify logOut={logOut} />
         </div>
       </AuthProvider>
     </Router>
