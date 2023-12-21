@@ -32,7 +32,7 @@ function Menu() {
   };
 
   useEffect(() => {
-    fetch("https://foodie-bh1b.onrender.com/api/v1/menu_category")
+    fetch("https://foodie-bh1b.onrender.com/api/v1/menu_category/")
       .then((response) => response.json())
       .then((data) => {
         setMenuCategories(data.menu_categories);
