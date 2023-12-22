@@ -35,7 +35,7 @@ function Menu() {
   };
 
   return (
-    <div className="mx-auto p-10 gap-8">
+    <div className="h-screen mx-auto p-10 gap-8">
       {/* Render categories */}
       <div className="flex justify-around">
         {menuCategories.map((category, index) => (

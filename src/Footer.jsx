@@ -4,7 +4,7 @@ import React from "react";
 function Footer () {
 
   return(
-    <footer className="flex flex-col justify-center items-center bg-slate-400 text-white">
+    <footer className="relative flex flex-col justify-center items-center bg-slate-400 text-white">
       <div className="flex justify-between gap-9 p-9 min-w-full items-center">
         <div>
           <p className="m-3">Hours:</p>

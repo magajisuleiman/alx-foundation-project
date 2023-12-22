@@ -3,7 +3,7 @@ import heroImg from "./assets/heroImg.png";
 
 function Hero() {
   return (
-    <div className="flex justify-center items-center max-w-screen ml-10 mr-10 gap-5">
+    <div className="flex justify-center items-center h-auto max-w-screen ml-10 mr-10 gap-5">
       <div>
         <img src={heroImg} alt="hero-pix" />
       </div>
