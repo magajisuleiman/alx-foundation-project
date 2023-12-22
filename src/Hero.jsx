@@ -7,7 +7,7 @@ function Hero() {
   const orderLink = isLoggedIn ? "/menu" : "/login";
 
   return (
-    <div className="flex justify-center items-center max-w-screen ml-10 mr-10 gap-5">
+    <div className="flex justify-center items-center max-w-screen ml-10 mr-10 gap-5 h-screen">
       <div>
         <img src={heroImg} alt="hero-pix" />
       </div>

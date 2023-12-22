@@ -362,7 +362,7 @@ function Profile() {
               <h3 className="mt-6 mb-6 font-bold">Change Password</h3>
               <div className="flex gap-12">
                 <form onSubmit={handleSubmit}>
-                  <div className="mb-4 flex flex-row gap-3 items-center">
+                  <div className="mb-4 flex flex-row gap-12 items-center">
                     <label
                       htmlFor="currentPassword"
                       className="text-brandColor font-bold"
@@ -378,7 +378,7 @@ function Profile() {
                       className="border-2 border-gray-300 rounded-md p-2"
                     />
                   </div>
-                  <div className="mb-4 flex flex-row gap-3 items-center">
+                  <div className="mb-4 flex flex-row gap-20 items-center">
                     <label
                       htmlFor="newPassword"
                       className="text-brandColor font-bold"
