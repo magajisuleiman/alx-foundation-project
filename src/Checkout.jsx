@@ -102,9 +102,10 @@ const ItemCheckout = () => {
         // Access the response from the API
         const responseData = await response.json();
         console.log("Order created successfully:", responseData);
-        console.log("Order Id", responseData.order.id);
+        const checkout_session_uri = responseData.checkout_session_uri;
         clearCart(); // Assuming clearCart is a function that clears the cart
         toast.success("Order placed successfully!");
+        window.location.href = checkout_session_uri;
       } else {
         // Handle the case where order creation failed
         alert("Failed to place order");
@@ -116,7 +117,7 @@ const ItemCheckout = () => {
     }
   };
   return (
-    <div className="flex m-4 gap-4">
+    <div className="flex m-4 gap-4 h-screen">
       <div className="border w-2/3">
         <h1 className="p-4 border-b text-2xl">Cart ({cartItems.length})</h1>
         {cartItems.length > 0 ? (
@@ -142,6 +143,7 @@ const ItemCheckout = () => {
             className="border p-2"
             placeholder="Enter your shipping address"
             onChange={(e) => setShippingAddress(e.target.value)}
+            required
           />
         </div>
         <div className="text-center p-4">
