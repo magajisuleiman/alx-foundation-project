@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "./assets/logo.svg";
+import GoogleLogo from "./assets/google.png";
 import { toast } from "react-toastify";
 
 function Login() {
@@ -63,6 +64,43 @@ function Login() {
       // Handle other potential errors here
     }
   };
+
+  // Function to handle Google login
+  const handleGoogleLogin = async () => {
+    try {
+      // Make an HTTP request to your backend when the logo is clicked
+      const response = await fetch(
+        "https://foodie-bh1b.onrender.com/api/v1/auth/google",
+        {
+          method: "GET",
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        // Get the redirect URL from the response
+        const redirectUrl = data.redirect;
+
+        const accessToken = data.access_token;
+
+        // Store the access token securely, e.g., in localStorage
+        localStorage.setItem("accessToken", accessToken);
+
+        // Navigate to the redirect URL
+        window.location.href = "/menu";
+
+        // Redirect the user to the obtained URL
+        window.location.href = redirectUrl;
+        console.log("Google login successful!");
+      } else {
+        throw new Error("Failed to fetch");
+      }
+    } catch (error) {
+      // Handle error if the request fails
+      console.error("Error:", error);
+      // Perform error handling or display a message to the user
+    }
+  };
+
   return (
     <div className="grid place-items-center bg-[url('./assets/login-pages.png')] h-screen bg-no-repeat bg-center bg-cover">
       <div className="bg-white p-8 rounded shadow-md w-96">
@@ -73,6 +111,14 @@ function Login() {
               Healthy Food, Wealthy Lifestyle
             </h3>
           </div>
+        </div>
+        <div className="flex justify-center items-center">
+          <img
+            src={GoogleLogo}
+            alt="Google Logo"
+            onClick={handleGoogleLogin}
+            style={{ cursor: "pointer" }}
+          />
         </div>
         <h1 className="text-2xl font-semibold mb-4 mt-4">Login</h1>
         <form onSubmit={handleSubmit}>
