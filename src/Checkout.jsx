@@ -83,8 +83,8 @@ const ItemCheckout = () => {
     try {
       // Assuming the API endpoint to create an order is 'https://example.com/api/orders'
       const response = await fetch(
-        //"https://foodie-bh1b.onrender.com/api/v1/order/",
-        "http://0.0.0.0:5000/api/v1/order/",
+        "https://foodie-bh1b.onrender.com/api/v1/order/",
+        //"http://0.0.0.0:5000/api/v1/order/",
         {
           method: "POST",
           headers: {
