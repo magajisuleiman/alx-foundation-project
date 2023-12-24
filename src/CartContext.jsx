@@ -1,10 +1,12 @@
 // CartContext.js
 import React, { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState(
     JSON.parse(localStorage.getItem("cartItems")) || []
   );
@@ -20,7 +22,18 @@ export const CartProvider = ({ children }) => {
       toast.error("Item already in cart");
     } else {
       toast.success(`1 plate of ${item.name} added to cart`);
-      setCartItems([...cartItems, item]);
+      //Send an alert asking if the user want to go to cart or stay to shop more. If yes, go to cart. If no, stay on the same page.
+      const confirmAddToCart = window.confirm(
+        `Do you want to go to cart or stay to shop more?`
+      );
+      if (confirmAddToCart) {
+        setCartItems([...cartItems, item]);
+        // Navigate to /cart
+        navigate("/cart");
+      } else {
+        // Stay on the same page
+        setCartItems([...cartItems, item]);
+      }
     }
   };
 

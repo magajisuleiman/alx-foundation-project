@@ -50,7 +50,8 @@ function Login() {
         // Handle successful login
         toast.success("Login successful");
         console.log("Login successful!");
-        navigate("/menu");
+        // Reload the page
+        window.location.reload();
         // Redirect or perform necessary actions upon successful login
       } else {
         // Handle failed login

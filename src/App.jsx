@@ -23,6 +23,7 @@ import CartModal from "./CartModal";
 import ItemCheckout from "./Checkout";
 import AuthVerify from "./Auth/AuthVerify";
 import useLogout from "./Auth/useLogout";
+import OrderPage from "./OrderPage";
 
 function RequireAuth({ children }) {
   const { isLoggedIn } = useAuth();
@@ -31,6 +32,17 @@ function RequireAuth({ children }) {
 
   if (!isLoggedIn) {
     return <Navigate to="/login" state={{ from: location }} />;
+  }
+
+  return children;
+}
+
+function RequireNotAuth({ children }) {
+  const { isLoggedIn } = useAuth();
+  console.log("isLoggedIn Req Not App" + " " + isLoggedIn);
+
+  if (isLoggedIn) {
+    return <Navigate to="/menu" />;
   }
 
   return children;
@@ -44,8 +56,22 @@ function App() {
           <CartProvider>
             <Navbar />
             <Routes>
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
+              <Route
+                path="/register"
+                element={
+                  <RequireNotAuth>
+                    <Register />
+                  </RequireNotAuth>
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  <RequireNotAuth>
+                    <Login />
+                  </RequireNotAuth>
+                }
+              />
               <Route path="/hero" element={<Hero />} />
               <Route path="/" element={<Hero />} />
               <Route path="/menu" element={<Menu />} />
@@ -66,6 +92,7 @@ function App() {
                   </RequireAuth>
                 }
               />
+              <Route path="/success/:str" element={<OrderPage />} />
             </Routes>
             <Footer />
           </CartProvider>
