@@ -1,27 +1,30 @@
 import React, { useContext, useState, useEffect } from "react";
 import Navbar from "./NavBar";
-import rice from "./assets/jolof.png";
-import swallo from "./assets/Swallo.png";
-import beans from "./assets/beans.png";
-import soups from "./assets/soup.png";
-import beverages from "./assets/beverages.png";
-import spaghetti from "./assets/spagetti.png";
-import deserts from "./assets/desert.png";
 import { CartContext } from "./CartContext";
+import { useNavigate } from "react-router-dom";
+
+import { useAuth } from "./AuthContext";
 
 function Menu() {
   const [menuCategories, setMenuCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const { addToCart } = useContext(CartContext);
+  const { isLoggedIn } = useAuth();
+  const navigateTo = useNavigate();
 
   const handleAddToCart = (item, quantity) => {
+    if (!isLoggedIn) {
+      // Redirect to login page if the user is not logged in
+      navigateTo("/login");
+      return;
+    }
     if (!item || !quantity) return;
     const newItem = {
       id: item.id,
       name: item.name,
       price: item.price,
       quantity: quantity,
-      image: item.image,
+      image_url: item.image_url,
       total: quantity * item.price,
     };
     const total = quantity * item.price;

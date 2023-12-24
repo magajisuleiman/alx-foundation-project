@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }) => {
       .then((response) => {
         // Clear userData from localStorage
         localStorage.removeItem("accessToken");
+        localStorage.removeItem("cartItems");
         toast.success("Logged out successfully!");
         setIsLoggedIn(false);
         // Redirect to the login page or perform other actions after logout
